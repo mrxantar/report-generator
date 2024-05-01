@@ -1,0 +1,17 @@
+﻿
+@model ReportModelView
+
+@foreach (var entry in Model.sortedEntries)
+{
+    <table class="table table-bordered table-sm table-dark align-middle border border-5">
+        <tbody >
+        @foreach (var item in entry.Value)
+        {
+            <tr class="border border-3">
+                <td class="border border-3">@item.TypeName</td>
+                <td class="border border-3">@item.Name</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
