@@ -1,51 +1,58 @@
 ﻿
 @model ReportModelView
 
-<div class="row">
-    <div class="col-md-6">
-        @foreach (var entry in Model.sortedEntries.Take(Model.sortedEntries.Count / 2))
-        {
-            <h4>@entry.Key</h4>
-            <table class="table table-bordered table-sm table-dark align-middle border border-5">
-                <thead>
-                    <tr class="border border-3">
-                        <th scope="col" class="border border-3">Тип объекта</th>
-                        <th scope="col" class="border border-3">Наименование объекта</th>
-                    </tr>
-                </thead>
-                <tbody class="table-group-divider">
-                @foreach (var item in entry.Value)
-                {
-                    <tr class="border border-3">
-                        <td class="border border-3">@item.TypeName</td>
-                        <td class="border border-3">@item.Name</td>
-                    </tr>
-                }
-                </tbody>
-            </table>
-        }
+@if(!(Model.sortedEntries is null))
+{
+    <div class="row">
+        <div class="col-md-6">
+            @foreach (var entry in Model.sortedEntries.Take(Model.sortedEntries.Count / 2))
+            {
+                <h4>@entry.Key</h4>
+                <table class="table table-bordered table-sm table-dark align-middle border border-5">
+                    <thead>
+                        <tr class="border border-3">
+                            <th scope="col" class="border border-3">Тип объекта</th>
+                            <th scope="col" class="border border-3">Наименование объекта</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                    @foreach (var item in entry.Value)
+                    {
+                        <tr class="border border-3">
+                            <td class="border border-3">@item.TypeName</td>
+                            <td class="border border-3">@item.Name</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+        </div>
+        <div class="col-md-6">
+            @foreach (var entry in Model.sortedEntries.Skip(Model.sortedEntries.Count / 2))
+            {
+                <h4>@entry.Key</h4>
+                <table class="table table-bordered table-sm table-dark align-middle border border-5">
+                    <thead>
+                        <tr class="border border-3">
+                            <th scope="col" class="border border-3">Тип объекта</th>
+                            <th scope="col" class="border border-3">Наименование объекта</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                    @foreach (var item in entry.Value)
+                    {
+                        <tr class="border border-3">
+                            <td class="border border-3">@item.TypeName</td>
+                            <td class="border border-3">@item.Name</td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            }
+        </div>
     </div>
-    <div class="col-md-6">
-        @foreach (var entry in Model.sortedEntries.Skip(Model.sortedEntries.Count / 2))
-        {
-            <h4>@entry.Key</h4>
-            <table class="table table-bordered table-sm table-dark align-middle border border-5">
-                <thead>
-                    <tr class="border border-3">
-                        <th scope="col" class="border border-3">Тип объекта</th>
-                        <th scope="col" class="border border-3">Наименование объекта</th>
-                    </tr>
-                </thead>
-                <tbody class="table-group-divider">
-                @foreach (var item in entry.Value)
-                {
-                    <tr class="border border-3">
-                        <td class="border border-3">@item.TypeName</td>
-                        <td class="border border-3">@item.Name</td>
-                    </tr>
-                }
-                </tbody>
-            </table>
-        }
-    </div>
-</div>
+}
+else
+{
+    <h1>Данные не загружены. Загрузите новый дамп</h1>
+}

@@ -38,15 +38,25 @@ public class HomeController : Controller
 
         var xmls = await extractor.GetPathsAsync();
 
-        var entries = await sortEntries.SortAsync(xmls);
-
-
-        var viewModel = new ReportModelView
+        try
         {
-            sortedEntries = entries,
-            uploadDate = date,
-        };
-        return View(viewModel);
+            var entries = await sortEntries.SortAsync(xmls);
+            var viewModel = new ReportModelView
+            {
+                sortedEntries = entries,
+                uploadDate = date,
+            };
+            return View(viewModel);
+        }
+        catch
+        {
+            var viewModel = new ReportModelView
+            {
+                sortedEntries = null,
+                uploadDate = date,
+            };
+            return View(viewModel);
+        }
     }
 
     public async Task<IActionResult> DownloadNewDump()
