@@ -1,7 +1,8 @@
 using System.Xml.Serialization;
-using System.Collections.Generic;
 
 namespace report_generator.Logic;
+
+
 
 [XmlRoot("ADDRESSOBJECTS")]
 public class AddressObjects
@@ -66,6 +67,9 @@ public class SortEntries
     {
         Dictionary<string, List<OrderedEntry>> sortedEntries = new Dictionary<string, List<OrderedEntry>>();
         XmlSerializer serializer = new XmlSerializer(typeof(AddressObjects));
+        LevelHandler levelHandler = new LevelHandler();
+        var levelNames = await levelHandler.GetObjectLevelsAsync();
+
         foreach (string xml in xmls)
         {
             using (FileStream fileStream = new FileStream(xml, FileMode.Open))
@@ -75,16 +79,17 @@ public class SortEntries
                 {
                     if (int.Parse(entry.OperTypeId) == 10)
                     {
-                        if (!sortedEntries.ContainsKey(entry.Level))
+                        var levelName = levelNames.Levels.Where(x => x.Level == entry.Level).FirstOrDefault();
+                        if (!sortedEntries.ContainsKey(levelName.Name))
                         {
-                            sortedEntries[entry.Level] = new List<OrderedEntry>
+                            sortedEntries[levelName.Name] = new List<OrderedEntry>
                             {
                                 entry
                             };
                         }
                         else
                         {
-                            sortedEntries[entry.Level].Add(entry);
+                            sortedEntries[levelName.Name].Add(entry);
                         }
                     }
                 }

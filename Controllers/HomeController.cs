@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using report_generator.Models;
 using report_generator.Logic;
-using ServiceReference;
 
 namespace report_generator.Controllers;
 
@@ -75,11 +74,6 @@ public class HomeController : Controller
     public HomeController(ILogger<HomeController> logger)
     {
         _logger = logger;
-    }
-
-    public IActionResult Privacy()
-    {
-        return View();
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

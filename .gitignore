@@ -482,5 +482,3 @@ $RECYCLE.BIN/
 
 # Встроенные библиотеки
 /wwwroot/lib
-
-/Views/Home/Privacy.cshtml

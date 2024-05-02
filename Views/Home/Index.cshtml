@@ -5,6 +5,7 @@
     <div class="col-md-6">
         @foreach (var entry in Model.sortedEntries.Take(Model.sortedEntries.Count / 2))
         {
+            <h4>@entry.Key</h4>
             <table class="table table-bordered table-sm table-dark align-middle border border-5">
                 <thead>
                     <tr class="border border-3">
@@ -27,6 +28,7 @@
     <div class="col-md-6">
         @foreach (var entry in Model.sortedEntries.Skip(Model.sortedEntries.Count / 2))
         {
+            <h4>@entry.Key</h4>
             <table class="table table-bordered table-sm table-dark align-middle border border-5">
                 <thead>
                     <tr class="border border-3">

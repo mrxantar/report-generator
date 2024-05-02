@@ -20,7 +20,7 @@ public class Extractor
         {
             foreach (ZipArchiveEntry entry in archive.Entries)
             {
-                if (entry.Name.Contains($"AS_ADDR_OBJ_{formattedDate}") || entry.Name.Contains("version.txt"))
+                if (entry.Name.Contains($"AS_ADDR_OBJ_{formattedDate}") || entry.Name.Contains("version.txt") || entry.Name.Contains("AS_OBJECT_LEVELS"))
                 {
                     entry.ExtractToFile($"{Constants.extractPath}/{entry.Name}", true);
                 }
@@ -30,8 +30,7 @@ public class Extractor
 
     public async Task<string[]> GetPathsAsync()
     {
-        string[] xmls = Directory.GetFiles(Constants.extractPath);
-        xmls = xmls.Where(filePath => !Path.GetFileName(filePath).Equals("version.txt")).ToArray();
+        string[] xmls = Directory.GetFiles(Constants.extractPath, "AS_ADDR_OBJ_*");
         return xmls;
     }
 }
