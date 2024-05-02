@@ -14,27 +14,31 @@ public class ReportModelView
 
 public class HomeController : Controller
 {
+
+    XmlHandler xmlHandler = new XmlHandler();
+    Extractor extractor = new Extractor();
+    Comparator comparator = new Comparator();
+    FileDownloader fileDownloader = new FileDownloader();
+    SortEntries sortEntries = new SortEntries();
+
     private readonly ILogger<HomeController> _logger;
 
     public async Task<IActionResult> Index()
     {
-        XmlHandler xmlHandler = new XmlHandler();
+        
         var downloadLink = await xmlHandler.GetDownloadLinkAsync();
         var uploadDate = await xmlHandler.GetUploadDateAsync();
         var date = await xmlHandler.GetUnformattedUploadDateAsync();
-        Extractor extractor = new Extractor();
-
-        Comparator comparator = new Comparator();
+        
         if (! await comparator.CompareDates(date))
         {
-            FileDownloader fileDownloader = new FileDownloader();
+            
             await fileDownloader.DownloadFileAsync(downloadLink, Constants.zipPath);
             await extractor.ExtractAsync(uploadDate, Constants.zipPath);
         }
 
         var xmls = await extractor.GetPathsAsync();
 
-        SortEntries sortEntries = new SortEntries();
         var entries = await sortEntries.SortAsync(xmls);
 
 
@@ -48,19 +52,15 @@ public class HomeController : Controller
 
     public async Task<IActionResult> DownloadNewDump()
     {
-        XmlHandler xmlHandler = new XmlHandler();
         var downloadLink = await xmlHandler.GetDownloadLinkAsync();
         var uploadDate = await xmlHandler.GetUploadDateAsync();
         var date = await xmlHandler.GetUnformattedUploadDateAsync();
 
-        FileDownloader fileDownloader = new FileDownloader();
         await fileDownloader.DownloadFileAsync(downloadLink, Constants.zipPath);
 
-        Extractor extractor = new Extractor();
         await extractor.ExtractAsync(uploadDate, Constants.zipPath);
         var xmls = await extractor.GetPathsAsync();
 
-        SortEntries sortEntries = new SortEntries();
         var entries = await sortEntries.SortAsync(xmls);
 
 
